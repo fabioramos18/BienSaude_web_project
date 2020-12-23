@@ -1,87 +1,60 @@
 <template>
-  <div id="app">
-    <h3>Registar:</h3>
-    <input type="text" placeholder="nome" v-model="nomeField"> <br>
-    <small id="nomeError" v-show="deuerro">Insira um Nome valido</small> <br>
-    <input type="email" placeholder="email" v-model="emailField"> <br>
-    <input type="number" placeholder="idade" v-model="idadeField"> <br>
-    <button @click="registaruser">Registar</button>
-    <hr>
-    
-    <div v-for="(cliente,index) in orderClientes" :key="cliente.id">
-      <h4>{{index + 1}}</h4>
-        <cliente :cliente="cliente" @meDelete="deletecliente($event)" />
-    </div>    
-  </div>
+  <v-app>
+    <v-app-bar
+      app
+      color="primary"
+      dark
+    >
+      <div class="d-flex align-center">
+        <v-img
+          alt="Vuetify Logo"
+          class="shrink mr-2"
+          contain
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          transition="scale-transition"
+          width="40"
+        />
+
+        <v-img
+          alt="Vuetify Name"
+          class="shrink mt-1 hidden-sm-and-down"
+          contain
+          min-width="100"
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
+          width="100"
+        />
+      </div>
+
+      <v-spacer></v-spacer>
+
+      <v-btn
+        href="https://github.com/vuetifyjs/vuetify/releases/latest"
+        target="_blank"
+        text
+      >
+        <span class="mr-2">Latest Release</span>
+        <v-icon>mdi-open-in-new</v-icon>
+      </v-btn>
+    </v-app-bar>
+
+    <v-main>
+      <HelloWorld/>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import cliente from './components/cliente'
-//import produto from './components/produto'
-import _ from 'lodash';
-
+import HelloWorld from './components/HelloWorld';
 
 export default {
+  name: 'App',
 
-  data(){
-        return{
-          deuerro: false,
-        nomeField:"",
-        emailField: "",
-        idadeField: 0,
-
-        clientes:[
-          {
-            id: 1,
-            nome: "Fabio Ramos",
-            email: "teste1@gmail.com", 
-             idade: "99"
-          },
-          {
-            id: 2,
-            nome: "Pedro alves",
-            email: "palvels@gmail.com", 
-            idade: "25"
-          },
-        ]
-        }
+  components: {
+    HelloWorld,
   },
 
-  components: { cliente, 
-  //produto
-  },
-  
-  methods: {
-     registaruser: function(){
-       if(this.nomeField == "" || this.nomeField == " "||  this.nomeField.length < 3){
-         this.deuerro = true;
-       }else{
-        this.clientes.push({nome: this.nomeField, email: this.emailField, idade: this.idadeField, id: Date.now()}),
-        this.nomeField = "",
-        this.emailField= "",
-        this.idadeField= 0,
-        this.deuerro = false;
-       }
-     },
-
-     deletecliente: function($event){
-       console.log("recebeu um evento");
-       console.log($event)
-     }
-  },
-
-  
-     computed: {
-       orderClientes: function() {
-         return _.orderBy(this.clientes,['nome'], ['asc']);
-       }
-     }
-
-}
+  data: () => ({
+    //
+  }),
+};
 </script>
-
-<style>
-#nomeError{
-  color: red;
-}
-</style>
